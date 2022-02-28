@@ -11,8 +11,8 @@ pipeline {
     stages {
         stage('Building Project') {
             steps {
-                bat 'mvn clean install'
-                bat 'mvn jacoco:prepare-agent test jacoco:report'
+                sh 'mvn clean install'
+                sh 'mvn jacoco:prepare-agent test jacoco:report'
                   }   
                            }
     
@@ -20,7 +20,7 @@ pipeline {
       stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('Sonar_server') {
-                   bat 'mvn sonar:sonar'
+                   sh 'mvn sonar:sonar'
                 }
             }
         }
@@ -80,7 +80,7 @@ pipeline {
      
 post {
        failure {
-      bat 'curl --request POST --url "https://narendrakumar02.atlassian.net/jira" --user "narendrakumar02@nagarro.com:cEerNJ7f2dtsmjHz1UjBE1EC" --header "Accept:application/json" --header "Content-Type:application/json" --data {"fields":{"project":{"key":"JWA"},"summary":"created for j","description":"Created for j","issuetype":{"name":"Task"}}}'
+      sh 'curl --request POST --url "https://narendrakumar02.atlassian.net/jira" --user "narendrakumar02@nagarro.com:cEerNJ7f2dtsmjHz1UjBE1EC" --header "Accept:application/json" --header "Content-Type:application/json" --data {"fields":{"project":{"key":"JWA"},"summary":"created for j","description":"Created for j","issuetype":{"name":"Task"}}}'
            
        }
    }           
